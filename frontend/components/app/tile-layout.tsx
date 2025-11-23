@@ -106,7 +106,7 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
           >
             <AnimatePresence mode="popLayout">
               {!isAvatar && (
-                // Audio Agent
+                // Audio Agent - Coffee Cup Visualization
                 <MotionContainer
                   key="agent"
                   layoutId="agent"
@@ -123,22 +123,35 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     delay: animationDelay,
                   }}
                   className={cn(
-                    'bg-background aspect-square h-[90px] rounded-md border border-transparent transition-[border,drop-shadow]',
-                    chatOpen && 'border-input/50 drop-shadow-lg/10 delay-200'
+                    'backdrop-blur-xl bg-gradient-to-br from-[#2d2520]/95 via-[#3d2f28]/95 to-[#2d2520]/95 aspect-square h-[90px] rounded-2xl border-2 transition-[border,drop-shadow]',
+                    chatOpen ? 'border-[#D4A574]/30 drop-shadow-2xl shadow-[#D4A574]/20' : 'border-[#D4A574]/50 drop-shadow-2xl shadow-[#D4A574]/30'
                   )}
                 >
+                  {/* Grain texture overlay */}
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-[0.02] pointer-events-none" 
+                    style={{
+                      backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+                      backgroundRepeat: 'repeat'
+                    }}
+                  />
+                  
+                  {/* Top glow line */}
+                  <div className="absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#D4A574]/60 to-transparent" />
+                  
                   <BarVisualizer
                     barCount={5}
                     state={agentState}
                     options={{ minHeight: 5 }}
                     trackRef={agentAudioTrack}
-                    className={cn('flex h-full items-center justify-center gap-1')}
+                    className={cn('flex h-full items-center justify-center gap-1.5 relative z-10')}
                   >
                     <span
                       className={cn([
-                        'bg-muted min-h-2.5 w-2.5 rounded-full',
-                        'origin-center transition-colors duration-250 ease-linear',
-                        'data-[lk-highlighted=true]:bg-foreground data-[lk-muted=true]:bg-muted',
+                        'bg-[#8B6F47]/40 min-h-2.5 w-2.5 rounded-full',
+                        'origin-center transition-all duration-300 ease-out',
+                        'data-[lk-highlighted=true]:bg-[#D4A574] data-[lk-highlighted=true]:shadow-[0_0_12px_rgba(212,165,116,0.6)] data-[lk-highlighted=true]:scale-110',
+                        'data-[lk-muted=true]:bg-[#8B6F47]/20',
                       ])}
                     />
                   </BarVisualizer>
@@ -161,7 +174,7 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     maskImage:
                       'radial-gradient(circle, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 1) 500px, transparent 500px)',
                     filter: 'blur(0px)',
-                    borderRadius: chatOpen ? 6 : 12,
+                    borderRadius: chatOpen ? 16 : 24,
                   }}
                   transition={{
                     ...ANIMATION_TRANSITION,
@@ -174,10 +187,13 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     },
                   }}
                   className={cn(
-                    'overflow-hidden bg-black drop-shadow-xl/80',
+                    'overflow-hidden bg-gradient-to-br from-[#2d2520] to-[#1a1614] drop-shadow-2xl border-2 border-[#D4A574]/30 relative',
                     chatOpen ? 'h-[90px]' : 'h-auto w-full'
                   )}
                 >
+                  {/* Glow overlay for avatar */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#D4A574]/10 to-transparent pointer-events-none z-10" />
+                  
                   <VideoTrack
                     width={videoWidth}
                     height={videoHeight}
@@ -219,13 +235,17 @@ export function TileLayout({ chatOpen }: TileLayoutProps) {
                     ...ANIMATION_TRANSITION,
                     delay: animationDelay,
                   }}
-                  className="drop-shadow-lg/20"
+                  className="drop-shadow-2xl relative"
                 >
+                  {/* Frame decoration */}
+                  <div className="absolute inset-0 rounded-2xl border-2 border-[#D4A574]/30 pointer-events-none z-10" />
+                  <div className="absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#D4A574]/60 to-transparent z-10" />
+                  
                   <VideoTrack
                     trackRef={cameraTrack || screenShareTrack}
                     width={(cameraTrack || screenShareTrack)?.publication.dimensions?.width ?? 0}
                     height={(cameraTrack || screenShareTrack)?.publication.dimensions?.height ?? 0}
-                    className="bg-muted aspect-square w-[90px] rounded-md object-cover"
+                    className="bg-gradient-to-br from-[#2d2520] to-[#3d2f28] aspect-square w-[90px] rounded-2xl object-cover"
                   />
                 </MotionContainer>
               )}

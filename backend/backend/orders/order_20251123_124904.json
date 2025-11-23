@@ -1,0 +1,10 @@
+{
+  "drinkType": "coffee",
+  "size": "medium",
+  "milk": "Almond milk",
+  "extras": [
+    "Vanilla essence",
+    "Whipped cream"
+  ],
+  "name": "Shubham"
+}

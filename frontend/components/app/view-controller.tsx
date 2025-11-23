@@ -14,17 +14,19 @@ const VIEW_MOTION_PROPS = {
   variants: {
     visible: {
       opacity: 1,
+      scale: 1,
     },
     hidden: {
       opacity: 0,
+      scale: 0.98,
     },
   },
   initial: 'hidden',
   animate: 'visible',
   exit: 'hidden',
   transition: {
-    duration: 0.5,
-    ease: 'linear',
+    duration: 0.6,
+    ease: [0.43, 0.13, 0.23, 0.96], // Smooth cafe-style easing
   },
 };
 
