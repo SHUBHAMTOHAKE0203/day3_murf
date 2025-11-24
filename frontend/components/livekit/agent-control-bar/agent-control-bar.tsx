@@ -89,22 +89,33 @@ export function AgentControlBar({
     <div
       aria-label="Voice assistant controls"
       className={cn(
-        'relative backdrop-blur-xl bg-gradient-to-br mt-5 from-[#2d2520]/95 via-[#3d2f28]/95 to-[#2d2520]/95 border-[#D4A574]/30 flex flex-col rounded-3xl border-2 p-4 shadow-2xl shadow-[#000000]/50',
+        'relative backdrop-blur-xl bg-gradient-to-br mt-5 from-[#0f0c29]/95 via-[#1a1447]/95 to-[#24243e]/95 border-[#667eea]/30 flex flex-col rounded-3xl border-2 p-4 shadow-2xl shadow-[#000000]/50',
         className
       )}
       {...props}
     >
-      {/* Subtle grain overlay */}
+      {/* Subtle grid pattern overlay */}
       <div 
-        className="absolute inset-0 rounded-3xl opacity-[0.02] pointer-events-none" 
+        className="absolute inset-0 rounded-3xl opacity-[0.015] pointer-events-none" 
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat'
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '60px 60px'
         }}
       />
-<div className='p-5'></div>
-      {/* Glow effect on top border */}
-      <div className="absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#D4A574]/50 to-transparent" />
+
+      {/* Ambient glow orbs */}
+      <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-32 h-32 bg-[#667eea] rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-32 h-32 bg-[#764ba2] rounded-full mix-blend-screen filter blur-3xl opacity-15 animate-pulse" style={{ animationDelay: '1s' } as React.CSSProperties} />
+      </div>
+
+      <div className='p-5'></div>
+
+      {/* Top glow effect */}
+      <div className="absolute -top-px left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-[#667eea]/60 to-transparent" />
+      
+      {/* Bottom subtle glow */}
+      <div className="absolute -bottom-px left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-[#764ba2]/40 to-transparent" />
 
       <div className="relative z-10">
         {/* Chat Input */}
@@ -122,7 +133,7 @@ export function AgentControlBar({
           <div className="flex grow gap-2">
             {/* Toggle Microphone */}
             {visibleControls.microphone && (
-              <div className="rounded-xl overflow-hidden ring-1 ring-[#D4A574]/20 hover:ring-[#D4A574]/40 transition-all">
+              <div className="rounded-xl overflow-hidden ring-1 ring-[#667eea]/30 hover:ring-[#667eea]/50 transition-all">
                 <TrackSelector
                   kind="audioinput"
                   aria-label="Toggle microphone"
@@ -133,14 +144,14 @@ export function AgentControlBar({
                   onPressedChange={microphoneToggle.toggle}
                   onMediaDeviceError={handleMicrophoneDeviceSelectError}
                   onActiveDeviceChange={handleAudioDeviceChange}
-                  className="bg-[#3d2f28]/50 hover:bg-[#D4A574]/20 border-0"
+                  className="bg-[#1a1447]/50 hover:bg-[#667eea]/20 border-0"
                 />
               </div>
             )}
 
             {/* Toggle Camera */}
             {visibleControls.camera && (
-              <div className="rounded-xl overflow-hidden ring-1 ring-[#D4A574]/20 hover:ring-[#D4A574]/40 transition-all">
+              <div className="rounded-xl overflow-hidden ring-1 ring-[#667eea]/30 hover:ring-[#667eea]/50 transition-all">
                 <TrackSelector
                   kind="videoinput"
                   aria-label="Toggle camera"
@@ -151,14 +162,14 @@ export function AgentControlBar({
                   onPressedChange={cameraToggle.toggle}
                   onMediaDeviceError={handleCameraDeviceSelectError}
                   onActiveDeviceChange={handleVideoDeviceChange}
-                  className="bg-[#3d2f28]/50 hover:bg-[#D4A574]/20 border-0"
+                  className="bg-[#1a1447]/50 hover:bg-[#667eea]/20 border-0"
                 />
               </div>
             )}
 
             {/* Toggle Screen Share */}
             {visibleControls.screenShare && (
-              <div className="rounded-xl overflow-hidden ring-1 ring-[#D4A574]/20 hover:ring-[#D4A574]/40 transition-all">
+              <div className="rounded-xl overflow-hidden ring-1 ring-[#667eea]/30 hover:ring-[#667eea]/50 transition-all">
                 <TrackToggle
                   size="icon"
                   variant="secondary"
@@ -167,20 +178,20 @@ export function AgentControlBar({
                   pressed={screenShareToggle.enabled}
                   disabled={screenShareToggle.pending}
                   onPressedChange={screenShareToggle.toggle}
-                  className="bg-[#3d2f28]/50 hover:bg-[#D4A574]/20 border-0 text-[#D4A574]"
+                  className="bg-[#1a1447]/50 hover:bg-[#667eea]/20 border-0 text-[#667eea]"
                 />
               </div>
             )}
 
             {/* Toggle Transcript */}
-            <div className="rounded-xl overflow-hidden ring-1 ring-[#D4A574]/20 hover:ring-[#D4A574]/40 transition-all">
+            <div className="rounded-xl overflow-hidden ring-1 ring-[#667eea]/30 hover:ring-[#667eea]/50 transition-all">
               <Toggle
                 size="icon"
                 variant="secondary"
                 aria-label="Toggle transcript"
                 pressed={chatOpen}
                 onPressedChange={handleToggleTranscript}
-                className="bg-[#3d2f28]/50 hover:bg-[#D4A574]/20 border-0 text-[#D4A574] data-[state=on]:bg-[#D4A574]/30 data-[state=on]:text-[#D4A574]"
+                className="bg-[#1a1447]/50 hover:bg-[#667eea]/20 border-0 text-[#667eea] data-[state=on]:bg-[#667eea]/30 data-[state=on]:text-[#667eea]"
               >
                 <ChatTextIcon weight="bold" />
               </Toggle>
@@ -193,11 +204,11 @@ export function AgentControlBar({
               variant="destructive"
               onClick={handleDisconnect}
               disabled={!isSessionActive}
-              className="bg-gradient-to-r from-[#8B4513]/90 to-[#A0522D]/90 hover:from-[#8B4513] hover:to-[#A0522D] text-[#F5F3F0] font-medium tracking-wide border-0 shadow-lg shadow-[#8B4513]/30 rounded-xl px-6 transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+              className="bg-gradient-to-r from-[#f093fb]/90 to-[#f5576c]/90 hover:from-[#f093fb] hover:to-[#f5576c] text-white font-semibold tracking-wide border-0 shadow-lg shadow-[#f5576c]/30 rounded-xl px-6 transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
             >
-              <PhoneDisconnectIcon weight="bold" className="text-[#F5F3F0]" />
-              <span className="hidden md:inline">END ORDER</span>
-              <span className="inline md:hidden">END</span>
+              <PhoneDisconnectIcon weight="bold" className="text-white" />
+              <span className="hidden md:inline">End Session</span>
+              <span className="inline md:hidden">End</span>
             </Button>
           )}
         </div>

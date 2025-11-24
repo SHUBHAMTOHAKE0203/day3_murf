@@ -1,0 +1,23 @@
+[
+  {
+    "mood": "good",
+    "energy": "moderate",
+    "stress": "not much",
+    "goals": "study for February exam, study for semester exams, complete a task",
+    "timestamp": "2025-11-24T11:09:05.059834"
+  },
+  {
+    "mood": "happy",
+    "energy": "medium",
+    "stress": "medium",
+    "goals": "do some exercise, complete assignments, read a book",
+    "timestamp": "2025-11-24T18:54:57.253774"
+  },
+  {
+    "mood": "happy",
+    "energy": "medium",
+    "stress": "medium",
+    "goals": "do some exercise, complete assignments, read a book",
+    "timestamp": "2025-11-24T18:54:57.253774"
+  }
+]
